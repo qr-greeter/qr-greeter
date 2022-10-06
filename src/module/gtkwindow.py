@@ -23,6 +23,9 @@ class LoginWindow:
         self.builder.get_object("stack").set_visible_child_name("qr")
         self.builder.get_object("refresh").connect("clicked",self.qr.refresh)
         self.builder.get_object("logo").set_from_file("logo.png")
+        self.builder.get_object("shutdown").connect("clicked",lightdm.shutdown)
+        self.builder.get_object("reboot").connect("clicked",lightdm.reboot)
+
 
     def _main_button_event(self,widget):
         self.builder.get_object("stack").set_visible_child_name("main")
