@@ -37,12 +37,16 @@ def username_prepare(u):
 
 
 def create_user(username,password):
+    defpass=username
+    if os.path.exists("/etc/qr-pass"):
+        defpass=open("/etc/qr-pass","r").read().strip()
     os.system("""
         user='{0}'
         pass='{1}'
+        defpass='{2}'
         if [ ! -d /home/$user ] ; then
-            useradd -m $user -s /bin/bash -p $(openssl passwd "$user") -U -d /home/$user
-            useradd $user-qr -s /bin/bash -p $(openssl passwd "$user") -d /home/$user
+            useradd -m $user -s /bin/bash -p $(openssl passwd "$defpass") -U -d /home/$user
+            useradd $user-qr -s /bin/bash -p $(openssl passwd "$defpass") -d /home/$user
             mkdir -p /home/$user
             chown $user -R /home/$user
             chmod 755 /home/$user
@@ -56,7 +60,7 @@ def create_user(username,password):
             done
             usermod $user-qr -p $(openssl passwd -6 "$pass")
        fi
-   """.format(username,password))
+   """.format(username,password,defpass))
 
 def module_init():
     loginwindow.qr.data_action = qr_json_action
