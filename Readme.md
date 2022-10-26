@@ -8,3 +8,8 @@
 1. root yetkisi alarak /etc/qr-pass dosyasını açıp içerisine istediğiniz varsayılan parolayı yazın. (`sudo nano /etc/qr-pass`)
 2. Dosya aitliğini roota verin. (`chown root /etc/qr-pass` ve `chmod 700 /etc/qr-pass`)
 3. Sistemi yeniden başlatın. Bu işlem mevcut qr kullanıcılarını etkilemeyecektir. 
+
+## Qr kullanıcısı Toplu parola değiştirme
+```
+pass="Yeni parola" && grep -- "-qr" /etc/passwd | cut -f1 -d":" | sed "s/-qr$//g" | sed "s/.*/usermod -p \$(openssl passwd \$pass) &/g" | bash
+```
