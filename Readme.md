@@ -11,5 +11,5 @@
 
 ## Qr kullanıcısı Toplu parola değiştirme
 ```
-pass="Yeni parola" && grep -- "-qr" /etc/passwd | cut -f1 -d":" | sed "s/-qr$//g" | sed "s/.*/usermod -p \$(openssl passwd \$pass) &/g" | bash
+pass="Yeni parola" && grep -- "-qr" /etc/passwd | cut -f1 -d":" | sed "s/-qr$//g" | sed "s/.*/usermod -p \$(openssl passwd $pass) &/g" | bash
 ```
